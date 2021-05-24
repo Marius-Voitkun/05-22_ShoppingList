@@ -33,7 +33,7 @@ else sessionStorage.setItem("id", items[items.length - 1].id);
 
 updateTable(items);
 
-document.getElementById('item-name').focus();
+document.getElementById('name').focus();
 document.getElementById('add-btn').addEventListener('click', addNewItem);
 
 
@@ -64,12 +64,14 @@ function updateTable(itemsList) {
 
 
 function addNewItem() {
+  if (!inputValidation()) return;
+
   let id = parseInt(sessionStorage.getItem("id")) + 1;
   sessionStorage.setItem("id", id);
 
   let item = {
     id: id,
-    name: document.getElementById('item-name').value,
+    name: document.getElementById('name').value,
     quantity: document.getElementById('quantity').value,
     units: document.getElementById('units').value,
     category: document.getElementById('category').value,
@@ -81,12 +83,41 @@ function addNewItem() {
   clearForm();
   updateTable(items);
 
-  document.getElementById('item-name').focus();
+  document.getElementById('name').focus();
 }
 
 
 function clearForm() {
-  document.getElementsByClassName('form-control').value = '';
+  let fields = document.getElementsByClassName('form-control');
+  
+  for (let field of fields) {
+    field.value = '';
+  }
+}
+
+
+function inputValidation(edit) {
+  let fields = document.getElementsByClassName('form-control');
+  let isFormEmpty = true;
+
+  for (let field of fields)
+    if (field.value != '') isFormEmpty = false;
+  
+  if (isFormEmpty) {
+    document.getElementById('validation').innerHTML = `<p class="error">Please fill the form</p>`;
+    return false;
+  }
+  if (fields[0].value == '') {
+    document.getElementById('validation').innerHTML = `<p class="error">Please enter the item name</p>`;
+    return false;
+  }
+  
+  if (edit) {
+    document.getElementById('validation').innerHTML = `<p class="success">Changes saved</p>`;
+    return true;
+  }
+  document.getElementById('validation').innerHTML = `<p class="success">Item successfully added</p>`;
+  return true;
 }
 
 
@@ -96,7 +127,13 @@ function activateBtnsInTable() {
 
   for (let btn of editBtns) {
     btn.addEventListener('click', function() {
-      editEntry(btn.id)
+      editEntry(btn.id);
+    });
+  }
+
+  for (let btn of deleteBtns) {
+    btn.addEventListener('click', function() {
+      deleteEntry(btn.id);
     });
   }
 }
@@ -109,38 +146,53 @@ function editEntry(editId) {
       enterEditMode(i);  
     }
   }
-  document.getElementById('edit-btn').addEventListener('click', saveChanges);
+  document.getElementById('save-changes-btn').addEventListener('click', saveChanges);
 }
 
 
 function enterEditMode(index) {
-  document.getElementById('item-id').value = items[index].id;
-  document.getElementById('item-name').value = items[index].name;
-  document.getElementById('quantity').value = items[index].quantity;
-  document.getElementById('units').value = items[index].units;
-  document.getElementById('category').value = items[index].category;
+  for (let key in items[index]) {
+    document.getElementById(key).value = items[index][key];
+  }
 
   document.getElementById('add-btn').style = 'display: none';
-  document.getElementById('edit-btn').style = '';
+  document.getElementById('save-changes-btn').style = '';
 }
 
 
 function saveChanges() {
-  let itemId = document.getElementById('item-id').value;
+  if (!inputValidation(true)) return;
 
-  let item = items.filter(task => task.id == itemId)[0];
+  let itemId = document.getElementById('id').value;
 
-  item.id = parseInt(document.getElementById('item-id').value);
-  item.name = document.getElementById('item-name').value;
-  item.quantity = document.getElementById('quantity').value;
-  item.units = document.getElementById('units').value;
-  item.category = document.getElementById('category').value;
+  let item = items.filter(item => item.id == itemId)[0];
+
+  for (let key in item) {
+    item[key] = document.getElementById(key).value;
+  }
+  item.id = parseInt(item.id);
 
   updateTable(items);
   sessionStorage.setItem('data', JSON.stringify(items));
   clearForm();
 
   document.getElementById('add-btn').style = '';
-  document.getElementById('edit-btn').style = 'display: none;';
-  document.getElementById('item-name').focus();
+  document.getElementById('save-changes-btn').style = 'display: none;';
+  document.getElementById('name').focus();
+}
+
+
+function deleteEntry(deleteId) {
+  for (let i = 0; i < items.length; i++) {
+    if (`delete-${items[i].id}` == deleteId)
+      items.splice(i, 1);
+  }
+
+  updateTable(items);
+  sessionStorage.setItem('data', JSON.stringify(items));
+  
+  clearForm();
+  document.getElementById('add-btn').style = '';
+  document.getElementById('save-changes-btn').style = 'display:none;';
+  document.getElementById('name').focus();
 }

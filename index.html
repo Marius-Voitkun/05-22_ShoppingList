@@ -16,15 +16,14 @@
   <body>
     <div class="container">
       <h1 class="text-center mt-3 mb-3">Shopping List</h1>
-      <div id="error"></div>
       <form>
-        <input type="hidden" id="item-id" />
+        <input type="hidden" id="id" />
         <div class="mb-3">
           <label for="item-name" class="form-label">Item</label>
           <input
             type="text"
             class="form-control"
-            id="item-name"
+            id="name"
             placeholder="Item"
           />
         </div>
@@ -57,8 +56,9 @@
             />
           </div>
         </div>
+        <div id="validation"></div>
         <button id="add-btn" type="button" class="btn btn-primary">Add</button>
-        <button id="edit-btn" type="button" class="btn btn-warning" style="display: none">
+        <button id="save-changes-btn" type="button" class="btn btn-warning" style="display: none">
           Save changes
         </button>
       </form>
