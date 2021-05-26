@@ -14,20 +14,22 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <h1 class="text-center mt-3 mb-3">Shopping List</h1>
       <form>
         <input type="hidden" id="id" />
         <div class="mb-3">
-          <label for="item-name" class="form-label">Item</label>
+          <label for="name" class="form-label">Item</label>
           <input
             type="text"
             class="form-control"
             id="name"
             placeholder="Item"
+            required
+            autofocus
           />
         </div>
-        <div class="row">
+        <div class="row custom-row">
           <div class="col mb-3">
             <label for="quantity" class="form-label">Quantity</label>
             <input
@@ -35,31 +37,60 @@
               class="form-control"
               id="quantity"
               placeholder="Quantity"
+              min="0"
+              max="999999"
             />
           </div>
           <div class="col mb-3">
             <label for="units" class="form-label">Units</label>
             <input
               type="text"
+              list="units-list"
               class="form-control"
               id="units"
               placeholder="Units"
+              autocomplete="off"
             />
+            <datalist id="units-list">
+              <option>pcs</option>
+              <option>g</option>
+              <option>kg</option>
+              <option>ml</option>
+              <option>l</option>
+            </datalist>
           </div>
-          <div class="col mb-3">
+          <div class="col mb-3 category-field">
             <label for="category" class="form-label">Category</label>
             <input
               type="text"
+              list="categories-list"
               class="form-control"
               id="category"
               placeholder="Category"
+              autocomplete="off"
             />
+            <datalist id="categories-list">
+              <option>fruit</option>
+              <option>vegetables</option>
+              <option>meat</option>
+              <option>fish</option>
+              <option>dairy</option>
+              <option>bakery</option>
+            </datalist>
           </div>
         </div>
         <div id="validation"></div>
         <button id="add-btn" type="button" class="btn btn-primary">Add</button>
-        <button id="save-changes-btn" type="button" class="btn btn-warning" style="display: none">
+        <button
+          id="save-changes-btn"
+          type="button"
+          class="btn btn-warning"
+          style="display: none"
+        >
           Save changes
+        </button>
+        <button id="cancel-btn" type="button" class="btn btn-secondary">
+          Cancel
         </button>
       </form>
       <table class="table mt-3">
@@ -68,7 +99,7 @@
             <th scope="col">Item</th>
             <th scope="col" colspan="2">Quantity</th>
             <th scope="col">Category</th>
-            <th></th>
+            <th class="table-btns"></th>
           </tr>
         </thead>
         <tbody></tbody>

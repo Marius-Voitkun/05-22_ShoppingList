@@ -33,8 +33,12 @@ else sessionStorage.setItem("id", items[items.length - 1].id);
 
 updateTable(items);
 
-document.getElementById('name').focus();
 document.getElementById('add-btn').addEventListener('click', addNewItem);
+document.getElementById('cancel-btn').addEventListener('click', function() {
+  clearForm();
+  document.getElementById('add-btn').style = '';
+  document.getElementById('save-changes-btn').style = 'display: none;';
+});
 
 
 function updateTable(itemsList) {
@@ -83,7 +87,6 @@ function addNewItem() {
   clearForm();
   updateTable(items);
 
-  document.getElementById('name').focus();
 }
 
 
@@ -93,30 +96,33 @@ function clearForm() {
   for (let field of fields) {
     field.value = '';
   }
+  
+  document.getElementById('name').focus();
 }
 
 
 function inputValidation(edit) {
   let fields = document.getElementsByClassName('form-control');
   let isFormEmpty = true;
+  document.getElementById('name').focus();
 
   for (let field of fields)
     if (field.value != '') isFormEmpty = false;
   
   if (isFormEmpty) {
-    document.getElementById('validation').innerHTML = `<p class="error">Please fill the form</p>`;
+    document.getElementById('validation').innerHTML = `<p class="error">Please fill the form.</p>`;
     return false;
   }
   if (fields[0].value == '') {
-    document.getElementById('validation').innerHTML = `<p class="error">Please enter the item name</p>`;
+    document.getElementById('validation').innerHTML = `<p class="error">Please enter the item name.</p>`;
     return false;
   }
   
   if (edit) {
-    document.getElementById('validation').innerHTML = `<p class="success">Changes saved</p>`;
+    document.getElementById('validation').innerHTML = `<p class="success">Changes saved.</p>`;
     return true;
   }
-  document.getElementById('validation').innerHTML = `<p class="success">Item successfully added</p>`;
+  document.getElementById('validation').innerHTML = `<p class="success">Item successfully added.</p>`;
   return true;
 }
 
@@ -128,12 +134,14 @@ function activateBtnsInTable() {
   for (let btn of editBtns) {
     btn.addEventListener('click', function() {
       editEntry(btn.id);
+      document.getElementById('validation').innerHTML = ``;
     });
   }
-
+  
   for (let btn of deleteBtns) {
     btn.addEventListener('click', function() {
       deleteEntry(btn.id);
+      document.getElementById('validation').innerHTML = ``;
     });
   }
 }
@@ -174,11 +182,10 @@ function saveChanges() {
 
   updateTable(items);
   sessionStorage.setItem('data', JSON.stringify(items));
+  
   clearForm();
-
   document.getElementById('add-btn').style = '';
   document.getElementById('save-changes-btn').style = 'display: none;';
-  document.getElementById('name').focus();
 }
 
 
@@ -194,5 +201,4 @@ function deleteEntry(deleteId) {
   clearForm();
   document.getElementById('add-btn').style = '';
   document.getElementById('save-changes-btn').style = 'display:none;';
-  document.getElementById('name').focus();
 }

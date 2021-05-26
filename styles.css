@@ -1,3 +1,52 @@
+.container-fluid {
+  max-width: 900px;
+}
+
+.custom-row {
+  display: grid;
+  grid-template-columns: repeat(3, 33.3fr);
+}
+
 td {
   overflow-wrap: normal;
+  vertical-align: middle;
+}
+
+th.table-btns {
+  width: 9rem;
+}
+
+/* @keyframes hide {
+  0% {}
+  100% {
+    visibility: hidden;
+    height: 0;
+   } 
+} */
+
+#validation {
+  font-weight: 700;
+  /* animation-name: hide;
+  animation-duration: 0;
+  animation-delay: 5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards; */
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+@media screen and (max-width: 767px) {
+  .custom-row {
+    grid-template-columns: repeat(2, 50fr);
+  }
+
+  .category-field {
+    grid-column: 1 / 3;
+  }
 }
