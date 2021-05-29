@@ -6,6 +6,15 @@
   display: none;
 }
 
+.block {
+  display: block;
+}
+
+.checked {
+  text-decoration: line-through;
+  color: grey;
+}
+
 .custom-row {
   display: grid;
   grid-template-columns: repeat(3, 33.3fr);
@@ -14,6 +23,10 @@
 td {
   overflow-wrap: normal;
   vertical-align: middle;
+}
+
+th.are-bought {
+  width: 2rem;
 }
 
 th.table-btns {

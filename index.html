@@ -16,7 +16,9 @@
   <body>
     <div class="container-fluid">
       <h1 class="text-center mt-3 mb-3">Shopping List</h1>
-      <button id="show-form-btn" type="button" class="btn btn-success hidden">Show Form</button>
+      <button id="show-form-btn" type="button" class="btn btn-success hidden">
+        Show Form
+      </button>
       <form id="enter-data">
         <input type="hidden" id="id" />
         <div class="mb-3">
@@ -93,11 +95,18 @@
         <button id="cancel-btn" type="button" class="btn btn-secondary">
           Cancel
         </button>
-        <button id="hide-form-btn" type="button" class="btn btn-success">Hide Form</button>
+        <button id="hide-form-btn" type="button" class="btn btn-outline-success">
+          Hide Form
+        </button>
       </form>
+      <label for="select-category" class="form-label mt-4">Filter by category</label>
+      <select id="select-category" class="form-select">
+        
+      </select>
       <table class="table mt-3">
         <thead>
           <tr>
+            <th class="are-bought"></th>
             <th scope="col">Item</th>
             <th scope="col" colspan="2">Quantity</th>
             <th scope="col">Category</th>
