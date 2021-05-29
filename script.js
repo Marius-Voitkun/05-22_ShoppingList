@@ -1,4 +1,4 @@
-// sessionStorage.setItem('data', JSON.stringify(
+// localStorage.setItem('data', JSON.stringify(
 //     [
 //       {
 //         id: 1,
@@ -24,12 +24,12 @@
 //     ])
 // );
 
-let items = JSON.parse(sessionStorage.getItem("data"));
+let items = JSON.parse(localStorage.getItem("data"));
 if (items === null) {
   items = [];
-  sessionStorage.setItem("id", 0);
+  localStorage.setItem("id", 0);
 }
-else sessionStorage.setItem("id", items[items.length - 1].id);
+else localStorage.setItem("id", items[items.length - 1].id);
 
 updateTable(items);
 
@@ -39,6 +39,15 @@ document.getElementById('cancel-btn').addEventListener('click', function() {
   document.getElementById('add-btn').style = '';
   document.getElementById('save-changes-btn').style = 'display: none;';
 });
+
+document.getElementById('hide-form-btn').addEventListener('click', function() {
+  document.getElementById('enter-data').classList.add('hidden');
+  document.getElementById('show-form-btn').classList.remove('hidden');
+})
+document.getElementById('show-form-btn').addEventListener('click', function() {
+  document.getElementById('enter-data').classList.remove('hidden');
+  document.getElementById('show-form-btn').classList.add('hidden');
+})
 
 
 function updateTable(itemsList) {
@@ -70,8 +79,8 @@ function updateTable(itemsList) {
 function addNewItem() {
   if (!inputValidation()) return;
 
-  let id = parseInt(sessionStorage.getItem("id")) + 1;
-  sessionStorage.setItem("id", id);
+  let id = parseInt(localStorage.getItem("id")) + 1;
+  localStorage.setItem("id", id);
 
   let item = {
     id: id,
@@ -82,7 +91,7 @@ function addNewItem() {
   };
 
   items.push(item);
-  sessionStorage.setItem('data', JSON.stringify(items));
+  localStorage.setItem('data', JSON.stringify(items));
 
   clearForm();
   updateTable(items);
@@ -181,7 +190,7 @@ function saveChanges() {
   item.id = parseInt(item.id);
 
   updateTable(items);
-  sessionStorage.setItem('data', JSON.stringify(items));
+  localStorage.setItem('data', JSON.stringify(items));
   
   clearForm();
   document.getElementById('add-btn').style = '';
@@ -196,7 +205,7 @@ function deleteEntry(deleteId) {
   }
 
   updateTable(items);
-  sessionStorage.setItem('data', JSON.stringify(items));
+  localStorage.setItem('data', JSON.stringify(items));
   
   clearForm();
   document.getElementById('add-btn').style = '';

@@ -16,7 +16,8 @@
   <body>
     <div class="container-fluid">
       <h1 class="text-center mt-3 mb-3">Shopping List</h1>
-      <form>
+      <button id="show-form-btn" type="button" class="btn btn-success hidden">Show Form</button>
+      <form id="enter-data">
         <input type="hidden" id="id" />
         <div class="mb-3">
           <label for="name" class="form-label">Item</label>
@@ -92,6 +93,7 @@
         <button id="cancel-btn" type="button" class="btn btn-secondary">
           Cancel
         </button>
+        <button id="hide-form-btn" type="button" class="btn btn-success">Hide Form</button>
       </form>
       <table class="table mt-3">
         <thead>

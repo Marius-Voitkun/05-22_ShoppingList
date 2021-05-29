@@ -2,6 +2,10 @@
   max-width: 900px;
 }
 
+.hidden {
+  display: none;
+}
+
 .custom-row {
   display: grid;
   grid-template-columns: repeat(3, 33.3fr);
