@@ -27,14 +27,14 @@
 //     ])
 // );
 
-let items = JSON.parse(localStorage.getItem("data"));
+let items = JSON.parse(localStorage.getItem('data'));
 let select = document.getElementById('select-category');
 
 if (items === null) {
   items = [];
-  localStorage.setItem("id", 0);
+  localStorage.setItem('id', 0);
 }
-else localStorage.setItem("id", items[items.length - 1].id);
+else localStorage.setItem('id', items[items.length - 1].id);
 
 updateTable(items);
 updateFilter();
@@ -242,7 +242,6 @@ function deleteEntry(deleteId) {
 
 function updateFilter() {
   let shoppingList = JSON.parse(localStorage.getItem('data'));
-  // let select = document.getElementById('select-category');
   let categories = [];
   let html = `<option value="0">Show all categories</option>`;
   
